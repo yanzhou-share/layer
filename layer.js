@@ -66,14 +66,17 @@ var Layer = (function($, undefined){
 				}
 			});
 			
-			var timer = null;
+			var timer = true;
 			if(this.options.blur){
 				this.$layer.on("blur",function(){
-					timer = setTimeout(function(){
-						if(!!that.options.closeCallback && $.isFunction(that.options.closeCallback) && !that._inputfocus && !that._layerover){
-							that.options.closeCallback();	
-						}
-					},200);					
+					if(timer){
+						clearTimeout(timer);
+						timer = setTimeout(function(){
+							if(!!that.options.closeCallback && $.isFunction(that.options.closeCallback) && !that._inputfocus && !that._layerover){
+								that.options.closeCallback();	
+							}
+						},200);					
+					}
 				});
 			}
 			
